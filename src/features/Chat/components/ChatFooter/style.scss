@@ -1,0 +1,29 @@
+.chat__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 62px;
+  border-top: 1px solid lightgray;
+
+  & > form {
+    flex: 1;
+    display: flex;
+
+    & > input {
+      border: none;
+      flex: 1;
+      border-radius: 30px;
+      padding: 10px;
+    }
+
+    & > button {
+      display: none; 
+    }
+  }
+
+  & > svg.MuiSvgIcon-root {
+    // cursor: pointer;
+    margin: 10px;
+    color: gray;
+  }
+}

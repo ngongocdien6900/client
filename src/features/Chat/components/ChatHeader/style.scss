@@ -1,0 +1,22 @@
+.chat__header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  border-left: 1px solid lightgray;
+}
+
+.chat__headerInfo {
+  /* padding 1 nó sẽ nhảy qua phải */
+  flex: 1;
+  padding-left: 20px;
+}
+
+.chat__headerInfo > h3 {
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+
+.chat__headerInfo > p {
+  color: gray;
+}
