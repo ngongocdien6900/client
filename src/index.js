@@ -8,7 +8,6 @@ import './index.css';
 import { SnackbarProvider } from 'notistack';
 ReactDOM.render(
   <React.StrictMode>
-  
     <Provider store={store}>
       <BrowserRouter>
         <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>

@@ -3,10 +3,10 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './style.scss';
 import { facebookLogin, googleLogin } from './userSlice';
 import EmailIcon from '@material-ui/icons/Email';
@@ -16,23 +16,15 @@ function AuthFeature(props) {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      history.push('/');
+      return;
+    }
 
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   return <Redirect to="/" />;
-    // }
-
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        history.push('/');
-        return;
-      }
-
-      //eslint-disable-next-line
-    }, [])
-
-
+    //eslint-disable-next-line
+  }, []);
 
   const responseGoogle = async (res) => {
     try {

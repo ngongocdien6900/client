@@ -1,19 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import adminApi from 'admin/api/adminApi';
 
-import StorageKeys from 'constants/storage-keys';
+import StorageKeys from 'admin/constants/storage-keys';
 
 //payload là tham số user truyền vào ở form
-export const login = createAsyncThunk('user/login', async (payload) => {
+export const login = createAsyncThunk('admin/login', async (payload) => {
   //call api to register
   const data = await adminApi.login(payload);
 
   //save data to localStorage
   localStorage.setItem(StorageKeys.TOKEN, data.token);
-  localStorage.setItem(StorageKeys.USER, JSON.stringify(data.user));
+  localStorage.setItem(StorageKeys.ADMIN, JSON.stringify(data.admin));
 
   //return data
-  return data.user;
+  return data.admin;
 });
 
 export const forgotPassword = createAsyncThunk('admin/forgotpassword', async (payload) => {

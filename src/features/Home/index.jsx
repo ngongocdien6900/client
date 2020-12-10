@@ -19,7 +19,6 @@ function HomeFeature(props) {
   return (
     <div className="home">
       <div className="home__body">
-        <ContactFeature />
         <ChatFeature />
       </div>
     </div>

@@ -2,33 +2,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
+
 ChatBody.propTypes = {
-  messages: PropTypes.array,
+  messageList: PropTypes.array,
+  currentUser: PropTypes.string,
 };
 
 ChatBody.defaultProps = {
-  messages: [],
+  messageList: [],
+  currentUser: ''
 };
 
+const getCurrentTime = () => {
+  const date = new Date();
+  const hours = `0${date.getHours()}`.slice(-2);
+  const minutes = `0${date.getMinutes()}`.slice(-2);
+  return `${hours} : ${minutes}`;
+}
+
 function ChatBody(props) {
-  const { messages } = props;
+
+  const { messageList, currentUser } = props;
 
   return (
     <div className="chat__body">
-      {messages.map((message) => (
-        <p className="chat__message" >
-          <span className="chat__name">Thanh Uyen</span>
-          {/* This a is message */}
-          {message}
-          <span className="chat__timestamp">{new Date().toUTCString()}</span>
+    
+      {messageList.map((message) => (
+        <p className={currentUser === message.sender ? 'chat__message chat__reciver' : 'chat__message'} key={message._id}>
+          <span className="chat__name">{message.sender}</span>
+          {message.message}
+          <span className="chat__timestamp">{getCurrentTime()}</span>
         </p>
       ))}
-
-      {/* <p className="chat__message chat__reciver">
-      <span className="chat__name">Thanh Uyen</span>
-      This a is message
-      <span className="chat__timestamp">{new Date().toUTCString()}</span>
-    </p> */}
     </div>
   );
 }

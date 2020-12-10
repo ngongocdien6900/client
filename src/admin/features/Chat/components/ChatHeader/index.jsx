@@ -13,7 +13,8 @@ function ChatHeader(props) {
     <Avatar />
 
     <div className="chat__headerInfo">
-      <h3>Admin</h3>
+      <h3>Room name</h3>
+      <p>Last seend at...</p>
     </div>
 
     <div className="chat__headerRight">

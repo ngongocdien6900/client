@@ -30,7 +30,7 @@ axiosClient.interceptors.response.use(
   },
   function (error) {
     const { data, config } = error.response;
-    const URLS = ['/admin/auth/forgotpassword', '/admin/auth/login', '/admin/auth/resetpassword'];
+    const URLS = ['/facebooklogin', '/googlelogin'];
     if (URLS.indexOf(config.url)) {
       throw new Error(data.message);
     }

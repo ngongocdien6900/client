@@ -1,0 +1,27 @@
+.contact__search {
+  display: flex;
+  align-items: center;
+  background-color: #f6f6f6;
+  height: 39px;
+  padding: 10px;
+
+  &--container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 35px;
+    border-radius: 20px;
+
+    & > svg.MuiSvgIcon-root {
+      color: gray;
+      margin: 10px;
+    }
+
+    & > input {
+      border: none;
+      outline-width: 0;
+      margin-left: 10px;
+    }
+  }
+}

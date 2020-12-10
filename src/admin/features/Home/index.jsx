@@ -1,20 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import ChatFeature from '../Chat';
+import ContactFeture from '../Contact';
+import './style.scss';
+
 HomeAdminFeatures.propTypes = {
     
 };
 
 function HomeAdminFeatures(props) {
 
-    if (!localStorage.getItem('token')) {
-    return <Redirect to="/admin/auth/login" />;
-  }
+    const history = useHistory();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          history.push('/admin/auth/login');
+        }
+    
+        //eslint-disable-next-line
+      }, []);
 
     return (
-        <div>
-            Admin Pages
-        </div>
+      <div className="home">
+      <div className="home__body">
+        <ContactFeture />
+        <ChatFeature />
+      </div>
+    </div>
     );
 }
 

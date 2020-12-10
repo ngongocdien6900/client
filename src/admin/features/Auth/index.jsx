@@ -1,5 +1,5 @@
-import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import ForgetPasswordPage from './pages/ForgotPasswordPage';
 import LoginPage from './pages/LoginPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
@@ -8,9 +8,17 @@ function AdminAuthFeature(props) {
   //lấy match thằng thằng route
   const match = useRouteMatch();
 
-  if (localStorage.getItem('token')) {
-    return <Redirect to="/admin" />;
-  }
+  const history = useHistory();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      history.push('/admin');
+    }
+
+    //eslint-disable-next-line
+  }, []);
+
 
   return (
     <Switch>

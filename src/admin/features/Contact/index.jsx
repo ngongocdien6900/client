@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import ContactChats from './components/ContactChats';
 import ContactHeader from './components/ContactHeader';
 import ContactSearch from './components/ContactSearch';
+
 import './style.scss';
 ContactFeture.propTypes = {};
 
