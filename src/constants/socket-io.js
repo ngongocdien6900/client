@@ -1,6 +1,7 @@
 const TAG_SOCKET_IO = {
-    JOIN_ROOM: 'join_room',
-    // TOKEN: 'token'
+    CREATE_CONVERSATION: 'create_conversation',
+    JOIN_CONVERSATION: 'join_conversation',
+    CHAT: 'chat',
 }
 
 export default TAG_SOCKET_IO;

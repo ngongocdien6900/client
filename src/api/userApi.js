@@ -11,10 +11,7 @@ const userApi = {
     return axiosClient.post(url, data);
   },
 
-  getMessage(param) {
-    const url = '/message';
-    return axiosClient.get(url, param);
-  }
+
 };
 
 export default userApi;
