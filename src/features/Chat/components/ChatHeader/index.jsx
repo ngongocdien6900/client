@@ -1,6 +1,9 @@
 import { Avatar, IconButton } from "@material-ui/core";
 import { AttachFile, MoreVert, SearchOutlined } from "@material-ui/icons";
+import { logout } from "features/Auth/userSlice";
 import React from 'react';
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import './style.scss';
 
 ChatHeader.propTypes = {
@@ -8,6 +11,17 @@ ChatHeader.propTypes = {
 };
 
 function ChatHeader(props) {
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleLogout = () => {
+    const action = logout();
+    dispatch(action);
+    history.push('/login');
+
+  }
+
   return (
     <div className="chat__header">
     <Avatar />
@@ -23,8 +37,8 @@ function ChatHeader(props) {
       <IconButton>
         <AttachFile />
       </IconButton>
-      <IconButton>
-        <MoreVert />
+      <IconButton onClick={handleLogout}>
+        <MoreVert/>
       </IconButton>
     </div>
   </div>

@@ -1,4 +1,4 @@
-import roomApi from 'api/messageApi';
+import conversationApi from 'admin/api/conversationApi';
 import React, { useEffect, useState } from 'react';
 import ContactChats from './components/ContactChats';
 import ContactHeader from './components/ContactHeader';
@@ -9,11 +9,29 @@ ContactFeture.propTypes = {};
 
 function ContactFeture(props) {
 
+  const [conversationList, setConversationList] = useState([]);
+
+  useEffect(() => {
+    const fetchConversationList = async () => {
+      try {
+ 
+        const response = await conversationApi.getAllConversations();
+        console.log(response);
+        setConversationList(response.conversations);
+      } catch (err) {
+        console.log('Failed to fetch message list' + err);
+      }
+    };
+
+    fetchConversationList();
+    //eslint-disable-next-line
+  }, []);
+
   return (
     <div className="contacts">
         <ContactHeader />
         <ContactSearch />
-        <ContactChats />
+        <ContactChats conversations={conversationList}/>
     </div>
   );
 }

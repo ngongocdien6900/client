@@ -12,7 +12,7 @@ let socket;
 const ENDPOINT = 'localhost:5000';
 
 function ChatFeature() {
-  const currentUser = useSelector(state => state.user.current);
+  const currentUser = useSelector((state) => state.user.current);
   const [messages, setMessage] = useState([]);
 
   //handle get messages to server
@@ -34,17 +34,11 @@ function ChatFeature() {
   }, []);
 
   useEffect(() => {
-    
     //create new connect
     socket = io(ENDPOINT);
 
     //setup response
     socket.emit(TAG_SOCKET_IO.JOIN_CONVERSATION, currentUser._id);
-
-    socket.on('message_server_return', data => {
-      const newMessages = ([...messages, data]);    
-      setMessage(newMessages);
-    })
 
     //disconnect ||cleanup the effect
     return () => socket.disconnect();
@@ -53,32 +47,51 @@ function ChatFeature() {
   }, []);
 
   const handleChatFormSubmit = async (message) => {
+    const sender = currentUser.fullname;
 
     //emit create conversation and chat
     if (messages.length === 0) {
-      socket.emit(TAG_SOCKET_IO.CREATE_CONVERSATION);
-      socket.emit(TAG_SOCKET_IO.CHAT)
+      socket.emit(TAG_SOCKET_IO.CREATE_CONVERSATION, currentUser._id);
 
+      socket.on('responseRoom', async (idConversation) => {
+        const payload = {
+          sender,
+          message,
+          idConversation,
+        };
+
+        const data = await messageApi.saveMessage(payload);
+
+        socket.emit(TAG_SOCKET_IO.CHAT, data);
+        socket.on('message_server_return', (data) => {
+          const newMessages = [...messages, data];
+          setMessage(newMessages);
+          console.log('0', messages);
+
+        });
+      });
     } else {
-      //get idConversation and name sender
       const idConversation = messages[0].idConversation._id || messages[0].idConversation;
-      const sender = currentUser.fullname;
 
       // request save message
       const payload = {
         sender,
         message,
-        idConversation
-      }
+        idConversation,
+      };
       const data = await messageApi.saveMessage(payload);
-      //emit chat
-      socket.emit('chat', data);
+      
+      socket.emit(TAG_SOCKET_IO.CHAT, data);
+      socket.on('message_server_return', (data) => {
+        const newMessages = [...messages, data];
+        setMessage(newMessages);
+        console.log('>= 1', messages);
 
+      });
     }
   };
 
   return (
-
     <div className="chat">
       <ChatHeader />
       <ChatBody messageList={messages} currentUser={currentUser.fullname} />

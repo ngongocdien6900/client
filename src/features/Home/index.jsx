@@ -1,5 +1,4 @@
 import ChatFeature from 'features/Chat';
-import ContactFeature from 'features/Contact';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './style.scss';
