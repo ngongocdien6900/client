@@ -51,7 +51,7 @@ function ChatFeature() {
 
     //emit create conversation and chat
     if (messages.length === 0) {
-      socket.emit(TAG_SOCKET_IO.CREATE_CONVERSATION, currentUser._id);
+      socket.emit(TAG_SOCKET_IO.CREATE_CONVERSATION, currentUser);
 
       socket.on('responseRoom', async (idConversation) => {
         const payload = {
@@ -66,8 +66,6 @@ function ChatFeature() {
         socket.on('message_server_return', (data) => {
           const newMessages = [...messages, data];
           setMessage(newMessages);
-          console.log('0', messages);
-
         });
       });
     } else {
@@ -85,8 +83,6 @@ function ChatFeature() {
       socket.on('message_server_return', (data) => {
         const newMessages = [...messages, data];
         setMessage(newMessages);
-        console.log('>= 1', messages);
-
       });
     }
   };

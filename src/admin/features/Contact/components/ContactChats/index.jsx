@@ -5,24 +5,35 @@ import { Avatar } from '@material-ui/core';
 
 ContactChats.propTypes = {
   conversations: PropTypes.array,
+  onConversationClick: PropTypes.func,
 };
 
 ContactChats.defaultProps = {
   conversations: [],
+  onConversationClick: null
 };
 
 function ContactChats(props) {
-  const { conversations } = props;
-  console.log(conversations);
+  const { conversations, onConversationClick } = props;
+
+  const handleClick = idConversation => {
+
+    if(!onConversationClick) return;
+    
+    onConversationClick(idConversation);
+  }
 
   return (
     <div className="contact__chats">
       {conversations.map((conversation) => (
-        <div className="contactChat" key={conversation._id}>
+        <div 
+          className="contactChat" 
+          key={conversation._id} 
+          onClick={() => handleClick(conversation._id)}>
           <Avatar />
           <div className="contactChat__info">
-            <h2>Room name</h2>
-            <p>This is the last message</p>
+            <h2>{conversation.nameConversation}</h2>
+            <p>{conversation.lastMessage}</p>
           </div>
         </div>
       ))}

@@ -2,9 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
-ChatBody.propTypes = {};
+ChatBody.propTypes = {
+  messageList: PropTypes.array,
+  currentUser: PropTypes.string,
+};
 
-ChatBody.defaultProps = {};
+ChatBody.defaultProps = {
+  messageList: [],
+  currentUser: ''
+};
 
 const getCurrentTime = () => {
   const date = new Date();
@@ -15,19 +21,17 @@ const getCurrentTime = () => {
 
 function ChatBody(props) {
 
+  const { messageList, currentUser } = props;
+
   return (
     <div className="chat__body">
-      <p className="chat__message">
-        <span className="chat__name">Thanh Uyen</span>
-        This a is message
-        <span className="chat__timestamp">{getCurrentTime()}</span>
-      </p>
-
-      <p className="chat__message chat__reciver">
-        <span className="chat__name">Ngoc Dien</span>
-        Hỗ trợ cc
-        <span className="chat__timestamp">{getCurrentTime()}</span>
-      </p>
+      {messageList.map((message) => (
+        <p className={currentUser === message.sender ? 'chat__message chat__reciver' : 'chat__message'} key={message._id}>
+          <span className="chat__name">{message.sender}</span>
+          {message.message}
+          <span className="chat__timestamp">{getCurrentTime()}</span>
+        </p>
+      ))}
     </div>
   );
 }
