@@ -13,7 +13,7 @@ const ENDPOINT = 'localhost:5000';
 
 function ChatFeature() {
   const currentUser = useSelector((state) => state.user.current);
-  const [messages, setMessage] = useState([]);
+  const [messages, setMessages] = useState([]);
 
   //handle get messages to server
   useEffect(() => {
@@ -23,7 +23,7 @@ function ChatFeature() {
           idUser: currentUser._id,
         };
         const response = await messageApi.getMessage(params);
-        setMessage(response.messageList);
+        setMessages(response.messageList);
       } catch (err) {
         console.log('Failed to fetch message list' + err);
       }
@@ -40,6 +40,12 @@ function ChatFeature() {
     //setup response
     socket.emit(TAG_SOCKET_IO.JOIN_CONVERSATION, currentUser._id);
 
+    socket.on('message_server_return', (data) => {
+      // const newMessages = [...messages, data];
+      // setMessages(newMessages);
+      setMessages(messages => [...messages, data]);
+    });
+  
     //disconnect ||cleanup the effect
     return () => socket.disconnect();
 
@@ -63,10 +69,7 @@ function ChatFeature() {
         const data = await messageApi.saveMessage(payload);
 
         socket.emit(TAG_SOCKET_IO.CHAT, data);
-        socket.on('message_server_return', (data) => {
-          const newMessages = [...messages, data];
-          setMessage(newMessages);
-        });
+        
       });
     } else {
       const idConversation = messages[0].idConversation._id || messages[0].idConversation;
@@ -80,10 +83,7 @@ function ChatFeature() {
       const data = await messageApi.saveMessage(payload);
       
       socket.emit(TAG_SOCKET_IO.CHAT, data);
-      socket.on('message_server_return', (data) => {
-        const newMessages = [...messages, data];
-        setMessage(newMessages);
-      });
+
     }
   };
 

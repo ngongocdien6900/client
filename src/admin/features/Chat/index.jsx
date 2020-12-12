@@ -24,7 +24,6 @@ function ChatFeature() {
           idConversation
         };
         const response = await messageApi.getMessage(params);
-        console.log(response);
         setMessages(response.messageList);
       } catch (err) {
         console.log('Failed to fetch message list' + err);
@@ -43,6 +42,11 @@ function ChatFeature() {
     //setup response
     socket.emit(TAG_SOCKET_IO.ADMIN_JOIN_CONVERSATION, idConversation);
     //update socket
+    socket.on('message_server_return', (data) => {
+      // const newMessages = [...messages, data];
+      // setMessages(newMessages);
+      setMessages(messages => [...messages, data]);
+    });
 
     //disconnect ||cleanup the effect
     return () => socket.disconnect();
@@ -51,21 +55,18 @@ function ChatFeature() {
 
   const handleChatFormSubmit = async message => {
     const sender = currentUser.fullname;
-    const idConversation = messages[0].idConversation._id || messages[0].idConversation;
+    const IdConversation = idConversation;
 
       // request save message
     const payload = {
       sender,
       message,
-      idConversation,
+      idConversation: IdConversation,
     };
     const data = await messageApii.saveMessage(payload);
     
     socket.emit(TAG_SOCKET_IO.CHAT, data);
-    socket.on('message_server_return', (data) => {
-      const newMessages = [...messages, data];
-      setMessages(newMessages);
-    });
+  
   }
     
 

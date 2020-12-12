@@ -22,6 +22,7 @@ const getCurrentTime = () => {
 function ChatBody(props) {
 
   const { messageList, currentUser } = props;
+  console.log()
 
   return (
     <div className="chat__body">
