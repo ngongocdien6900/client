@@ -8,6 +8,7 @@ import ChatFooter from './components/ChatFooter';
 import ChatHeader from './components/ChatHeader';
 import './style.scss';
 import messageApii from 'api/messageApi';
+
 let socket;
 const ENDPOINT = 'localhost:5000';
 
@@ -15,7 +16,7 @@ function ChatFeature() {
 
   const [messages, setMessages] = useState([]);
   const idConversation = useSelector(state => state.contactAdmin.idConversation);
-  const currentUser = useSelector(state => state.user.current);
+  const currentAdmin = useSelector(state => state.admin.current);
 
   useEffect(() => {
     const fetchMessageList = async () => {
@@ -23,6 +24,8 @@ function ChatFeature() {
         const params = {
           idConversation
         };
+        if(!idConversation) return;
+
         const response = await messageApi.getMessage(params);
         setMessages(response.messageList);
       } catch (err) {
@@ -41,27 +44,30 @@ function ChatFeature() {
 
     //setup response
     socket.emit(TAG_SOCKET_IO.ADMIN_JOIN_CONVERSATION, idConversation);
+    
     //update socket
-    socket.on('message_server_return', (data) => {
-      // const newMessages = [...messages, data];
-      // setMessages(newMessages);
-      setMessages(messages => [...messages, data]);
+    socket.on(TAG_SOCKET_IO.NEW_MESSAGE, (message) => {
+      console.log('Admin');
+      setMessages(messages => [...messages, message]);
     });
 
-    //disconnect ||cleanup the effect
+    socket.on(TAG_SOCKET_IO.RESPONSE_ROOM, data => {
+      console.log(data);
+    })
+
+    //disconnect 
     return () => socket.disconnect();
     //eslint-disable-next-line
   }, [idConversation]);
 
   const handleChatFormSubmit = async message => {
-    const sender = currentUser.fullname;
-    const IdConversation = idConversation;
+    const sender = currentAdmin.fullname;
 
-      // request save message
+    // request save message
     const payload = {
       sender,
       message,
-      idConversation: IdConversation,
+      idConversation,
     };
     const data = await messageApii.saveMessage(payload);
     
@@ -69,12 +75,10 @@ function ChatFeature() {
   
   }
     
-
-
   return (
     <div className="chat">
       <ChatHeader />
-      <ChatBody messageList={messages} currentUser={currentUser.fullname} />
+      <ChatBody messageList={messages} currentUser={currentAdmin.fullname} />
       <ChatFooter onSubmit={handleChatFormSubmit}/>
     </div>
   );

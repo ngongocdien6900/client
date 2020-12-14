@@ -14,13 +14,15 @@ ContactChats.defaultProps = {
 };
 
 function ContactChats(props) {
+  
   const { conversations, onConversationClick } = props;
+  console.log(conversations);
 
-  const handleClick = idConversation => {
+  const handleClick = conversation => {
 
     if(!onConversationClick) return;
     
-    onConversationClick(idConversation);
+    onConversationClick(conversation);
   }
 
   return (
@@ -29,7 +31,7 @@ function ContactChats(props) {
         <div 
           className="contactChat" 
           key={conversation._id} 
-          onClick={() => handleClick(conversation._id)}>
+          onClick={() => handleClick((conversation))}>
           <Avatar />
           <div className="contactChat__info">
             <h2>{conversation.nameConversation}</h2>

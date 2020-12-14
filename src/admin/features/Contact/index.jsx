@@ -1,40 +1,37 @@
 import conversationApi from 'admin/api/conversationApi';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContactChats from './components/ContactChats';
 import ContactHeader from './components/ContactHeader';
 import ContactSearch from './components/ContactSearch';
-import { updateIdConversation } from './contactSlice';
-
+import { updateConversationList, updateIdConversation } from './contactSlice';
 import './style.scss';
-ContactFeture.propTypes = {};
 
-function ContactFeture(props) {
-
-  const [conversationList, setConversationList] = useState([]);
-
+function ContactFeture() {
 
   const dispatch = useDispatch();
-
+  const conversationList = useSelector(state => state.contactAdmin.conversationList);
   useEffect(() => {
+
     const fetchConversationList = async () => {
       try {
- 
+        
         const response = await conversationApi.getAllConversations();
-        setConversationList(response.conversations);
+        dispatch(updateConversationList(response));
+        // setConversationList(response.conversations);
       } catch (err) {
         console.log('Failed to fetch message list' + err);
       }
     };
 
     fetchConversationList();
+
     //eslint-disable-next-line
   }, []);
 
-  const handleConversationClick = (idConversation) => {
-    const action = updateIdConversation(idConversation);
+  const handleConversationClick = (conversation) => {
+    const action = updateIdConversation(conversation._id);
     dispatch(action);
-
   }
 
   return (
@@ -42,7 +39,7 @@ function ContactFeture(props) {
         <ContactHeader />
         <ContactSearch />
         <ContactChats 
-          conversations={conversationList} 
+          conversations={conversationList.conversations} 
           onConversationClick={handleConversationClick}
         />
     </div>

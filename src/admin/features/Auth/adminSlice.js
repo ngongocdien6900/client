@@ -31,7 +31,7 @@ const adminSlice = createSlice({
   name: 'admin',
   initialState: {
     //thông tin của thằng user đang đăng nhập
-    current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
+    current: JSON.parse(localStorage.getItem(StorageKeys.ADMIN)) || {},
   },
 
   //ở đây định nghĩa hàm, tự động tạo ra action type tương ứng
@@ -39,7 +39,7 @@ const adminSlice = createSlice({
     logout(state, action) {
       //clear local storage
       localStorage.removeItem(StorageKeys.TOKEN);
-      localStorage.removeItem(StorageKeys.USER);
+      localStorage.removeItem(StorageKeys.ADMIN);
 
       state.current = {};
     },

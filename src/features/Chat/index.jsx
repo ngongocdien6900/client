@@ -37,15 +37,13 @@ function ChatFeature() {
     //create new connect
     socket = io(ENDPOINT);
 
-    //setup response
     socket.emit(TAG_SOCKET_IO.JOIN_CONVERSATION, currentUser._id);
-
-    socket.on('message_server_return', (data) => {
-      // const newMessages = [...messages, data];
-      // setMessages(newMessages);
-      setMessages(messages => [...messages, data]);
+    //setup response
+    socket.on(TAG_SOCKET_IO.NEW_MESSAGE, (message) => {
+      console.log('User');
+      setMessages(messages => [...messages, message]);
     });
-  
+
     //disconnect ||cleanup the effect
     return () => socket.disconnect();
 
@@ -59,13 +57,12 @@ function ChatFeature() {
     if (messages.length === 0) {
       socket.emit(TAG_SOCKET_IO.CREATE_CONVERSATION, currentUser);
 
-      socket.on('responseRoom', async (idConversation) => {
+      socket.on(TAG_SOCKET_IO.RESPONSE_ROOM, async (conversation) => {
         const payload = {
           sender,
           message,
-          idConversation,
+          idConversation: conversation._id,
         };
-
         const data = await messageApi.saveMessage(payload);
 
         socket.emit(TAG_SOCKET_IO.CHAT, data);
