@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
-
 ChatBody.propTypes = {
   messageList: PropTypes.array,
   currentUser: PropTypes.string,
@@ -9,7 +8,7 @@ ChatBody.propTypes = {
 
 ChatBody.defaultProps = {
   messageList: [],
-  currentUser: ''
+  currentUser: '',
 };
 
 const getCurrentTime = () => {
@@ -17,21 +16,35 @@ const getCurrentTime = () => {
   const hours = `0${date.getHours()}`.slice(-2);
   const minutes = `0${date.getMinutes()}`.slice(-2);
   return `${hours} : ${minutes}`;
-}
+};
 
 function ChatBody(props) {
-
   const { messageList, currentUser } = props;
+  const messagesEndRef = useRef(null);
 
+  useEffect(() => {
+    scrollToBottom();
+  },
+    [messageList]
+  );
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }
   return (
-    <div className="chat__body">
+    <div className="chat__body" >
       {messageList.map((message) => (
-        <p className={currentUser === message.sender ? 'chat__message chat__reciver' : 'chat__message'} key={message._id}>
+        <p
+          className={currentUser === message.sender ? 'chat__message chat__reciver' : 'chat__message'}
+          key={message._id}
+        >
           <span className="chat__name">{message.sender}</span>
           {message.message}
           <span className="chat__timestamp">{getCurrentTime()}</span>
         </p>
+
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 }

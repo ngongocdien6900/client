@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import './styles.scss';
 
@@ -22,8 +22,16 @@ const getCurrentTime = () => {
 function ChatBody(props) {
 
   const { messageList, currentUser } = props;
-  console.log()
+  const messagesEndRef = useRef(null);
+  useEffect(() => {
+    scrollToBottom();
+  },
+    [messageList]
+  );
 
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }
   return (
     <div className="chat__body">
       {messageList.map((message) => (
@@ -33,6 +41,7 @@ function ChatBody(props) {
           <span className="chat__timestamp">{getCurrentTime()}</span>
         </p>
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 }

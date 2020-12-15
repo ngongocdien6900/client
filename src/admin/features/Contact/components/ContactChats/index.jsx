@@ -10,14 +10,13 @@ ContactChats.propTypes = {
 
 ContactChats.defaultProps = {
   conversations: [],
-  onConversationClick: null
+  onConversationClick: null,
 };
 
 function ContactChats(props) {
   
   const { conversations, onConversationClick } = props;
-  console.log(conversations);
-
+  
   const handleClick = conversation => {
 
     if(!onConversationClick) return;

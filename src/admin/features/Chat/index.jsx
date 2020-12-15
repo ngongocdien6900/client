@@ -1,7 +1,7 @@
 import messageApi from 'admin/api/messageApi';
 import TAG_SOCKET_IO from 'admin/constants/socket-io';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import ChatBody from './components/ChatBody';
 import ChatFooter from './components/ChatFooter';
@@ -17,6 +17,8 @@ function ChatFeature() {
   const [messages, setMessages] = useState([]);
   const idConversation = useSelector(state => state.contactAdmin.idConversation);
   const currentAdmin = useSelector(state => state.admin.current);
+  
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMessageList = async () => {
@@ -45,15 +47,11 @@ function ChatFeature() {
     //setup response
     socket.emit(TAG_SOCKET_IO.ADMIN_JOIN_CONVERSATION, idConversation);
     
+
     //update socket
     socket.on(TAG_SOCKET_IO.NEW_MESSAGE, (message) => {
-      console.log('Admin');
       setMessages(messages => [...messages, message]);
     });
-
-    socket.on(TAG_SOCKET_IO.RESPONSE_ROOM, data => {
-      console.log(data);
-    })
 
     //disconnect 
     return () => socket.disconnect();

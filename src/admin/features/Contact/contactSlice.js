@@ -4,26 +4,34 @@ const contactSlice = createSlice({
   name: 'contact',
   initialState: {
     idConversation: '',
+    nameConversation: '',
     conversationList: [],
+    chat: '',
   },
 
   reducers: {
-    updateIdConversation(state, action) {
-      state.idConversation = action.payload;
+    updateIdConversation: (state, action) => {
+      state.idConversation = action.payload._id;
+      state.nameConversation = action.payload.nameConversation;
     },
 
-    updateConversationList(state, action) {
+    updateConversationList: (state, action) => {
       state.conversationList = action.payload;
     },
 
-    addNewConversation(state, action) {
+    updateLastMessage: (state, action) => {
       const newConversation = action.payload;
-      state.conversationList.push(newConversation);
+      
+      const conversationIndex = state.conversationList.conversations.findIndex(conversation => conversation._id === newConversation._id);
+
+      if(conversationIndex >= 0) {
+          state.conversationList.conversations[conversationIndex] = newConversation;
+      }
     }
 
   },
 });
 
 const { actions, reducer } = contactSlice;
-export const { updateIdConversation, updateConversationList, addNewConversation } = actions;
+export const { updateIdConversation, updateConversationList, updateLastMessage } = actions;
 export default reducer;

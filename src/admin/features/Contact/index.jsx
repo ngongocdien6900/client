@@ -1,11 +1,14 @@
 import conversationApi from 'admin/api/conversationApi';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ContactChats from './components/ContactChats';
 import ContactHeader from './components/ContactHeader';
 import ContactSearch from './components/ContactSearch';
-import { updateConversationList, updateIdConversation } from './contactSlice';
+import { updateConversationList, updateIdConversation, updateLastMessage } from './contactSlice';
 import './style.scss';
+import io from 'socket.io-client';
+let socket;
+const ENDPOINT = 'localhost:5000';
 
 function ContactFeture() {
 
@@ -18,7 +21,6 @@ function ContactFeture() {
         
         const response = await conversationApi.getAllConversations();
         dispatch(updateConversationList(response));
-        // setConversationList(response.conversations);
       } catch (err) {
         console.log('Failed to fetch message list' + err);
       }
@@ -29,8 +31,21 @@ function ContactFeture() {
     //eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.on('lastMessage', data => {
+
+      const action = updateLastMessage(data);
+      dispatch(action);
+
+    })
+
+    return () => socket.disconnect();
+    //eslint-disable-next-line
+  }, []);
+
   const handleConversationClick = (conversation) => {
-    const action = updateIdConversation(conversation._id);
+    const action = updateIdConversation(conversation);
     dispatch(action);
   }
 

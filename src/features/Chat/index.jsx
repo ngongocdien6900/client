@@ -40,7 +40,6 @@ function ChatFeature() {
     socket.emit(TAG_SOCKET_IO.JOIN_CONVERSATION, currentUser._id);
     //setup response
     socket.on(TAG_SOCKET_IO.NEW_MESSAGE, (message) => {
-      console.log('User');
       setMessages(messages => [...messages, message]);
     });
 
@@ -51,6 +50,7 @@ function ChatFeature() {
   }, []);
 
   const handleChatFormSubmit = async (message) => {
+
     const sender = currentUser.fullname;
 
     //emit create conversation and chat
@@ -66,11 +66,11 @@ function ChatFeature() {
         const data = await messageApi.saveMessage(payload);
 
         socket.emit(TAG_SOCKET_IO.CHAT, data);
-        
       });
     } else {
       const idConversation = messages[0].idConversation._id || messages[0].idConversation;
-
+      const conversation = messages[0].idConversation;
+      console.log('Conversation: ', conversation);
       // request save message
       const payload = {
         sender,
@@ -80,8 +80,9 @@ function ChatFeature() {
       const data = await messageApi.saveMessage(payload);
       
       socket.emit(TAG_SOCKET_IO.CHAT, data);
+    } 
 
-    }
+
   };
 
   return (
