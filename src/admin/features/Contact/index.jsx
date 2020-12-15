@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ContactChats from './components/ContactChats';
 import ContactHeader from './components/ContactHeader';
 import ContactSearch from './components/ContactSearch';
-import { updateConversationList, updateIdConversation, updateLastMessage } from './contactSlice';
+import { showConversation, updateConversationList, updateIdConversation, updateLastMessage } from './contactSlice';
 import './style.scss';
 import io from 'socket.io-client';
 let socket;
@@ -14,6 +14,7 @@ function ContactFeture() {
 
   const dispatch = useDispatch();
   const conversationList = useSelector(state => state.contactAdmin.conversationList);
+  console.log(conversationList.conversations);
   useEffect(() => {
 
     const fetchConversationList = async () => {
@@ -34,10 +35,13 @@ function ContactFeture() {
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.on('lastMessage', data => {
-
       const action = updateLastMessage(data);
       dispatch(action);
+    })
 
+    socket.on('show_me', data => {
+      const action = showConversation(data);
+      dispatch(action);
     })
 
     return () => socket.disconnect();

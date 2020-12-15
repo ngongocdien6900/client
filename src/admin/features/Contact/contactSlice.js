@@ -21,17 +21,31 @@ const contactSlice = createSlice({
 
     updateLastMessage: (state, action) => {
       const newConversation = action.payload;
-      
-      const conversationIndex = state.conversationList.conversations.findIndex(conversation => conversation._id === newConversation._id);
 
-      if(conversationIndex >= 0) {
-          state.conversationList.conversations[conversationIndex] = newConversation;
+      const conversationIndex = state.conversationList.conversations.findIndex(
+        (conversation) => conversation._id === newConversation._id
+      );
+
+      if (conversationIndex >= 0) {
+        state.conversationList.conversations[conversationIndex] = newConversation;
       }
-    }
+    },
 
+    showConversation: (state, action) => {
+      const newConversation = action.payload;
+
+      const conversationIndex = state.conversationList.conversations.findIndex(
+        (conversation) => conversation._id === newConversation._id
+      );
+      
+      if (conversationIndex < 0) {
+        console.log('Add', conversationIndex);
+        state.conversationList.conversations.push(newConversation);
+      } 
+    },
   },
 });
 
 const { actions, reducer } = contactSlice;
-export const { updateIdConversation, updateConversationList, updateLastMessage } = actions;
+export const { updateIdConversation, updateConversationList, updateLastMessage, showConversation } = actions;
 export default reducer;

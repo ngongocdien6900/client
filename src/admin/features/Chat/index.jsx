@@ -17,8 +17,6 @@ function ChatFeature() {
   const [messages, setMessages] = useState([]);
   const idConversation = useSelector(state => state.contactAdmin.idConversation);
   const currentAdmin = useSelector(state => state.admin.current);
-  
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchMessageList = async () => {
@@ -52,6 +50,10 @@ function ChatFeature() {
     socket.on(TAG_SOCKET_IO.NEW_MESSAGE, (message) => {
       setMessages(messages => [...messages, message]);
     });
+
+    socket.on('test', value => {
+      console.log(value);
+    })
 
     //disconnect 
     return () => socket.disconnect();
