@@ -4,17 +4,8 @@ import DonutLargeIcon from "@material-ui/icons/DonutLarge";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React from 'react';
 import './style.scss';
-import PropTypes from 'prop-types';
-
-ContactHeader.propTypes = {
-};
-
-ContactHeader.defaultProps = {
-};
 
 function ContactHeader(props) {
-
-  
 
   return (
     <div className="contact__header">

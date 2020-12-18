@@ -69,8 +69,6 @@ function ChatFeature() {
       });
     } else {
       const idConversation = messages[0].idConversation._id || messages[0].idConversation;
-      const conversation = messages[0].idConversation;
-      console.log('Conversation: ', conversation);
       // request save message
       const payload = {
         sender,

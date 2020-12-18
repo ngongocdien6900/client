@@ -1,13 +1,13 @@
 import messageApi from 'admin/api/messageApi';
 import TAG_SOCKET_IO from 'admin/constants/socket-io';
+import messageApii from 'api/messageApi';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import ChatBody from './components/ChatBody';
 import ChatFooter from './components/ChatFooter';
 import ChatHeader from './components/ChatHeader';
 import './style.scss';
-import messageApii from 'api/messageApi';
 
 let socket;
 const ENDPOINT = 'localhost:5000';
