@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ContactChats from './components/ContactChats';
 import ContactHeader from './components/ContactHeader';
 import ContactSearch from './components/ContactSearch';
-import { showConversation, updateConversationList, updateIdConversation, updateLastMessage } from './contactSlice';
+import { searchConversation, showConversation, updateConversationList, updateIdConversation, updateLastMessage } from './contactSlice';
 import './style.scss';
 import io from 'socket.io-client';
 let socket;
@@ -14,7 +14,6 @@ function ContactFeture() {
 
   const dispatch = useDispatch();
   const conversationList = useSelector(state => state.contactAdmin.conversationList);
-  console.log(conversationList.conversations);
   useEffect(() => {
 
     const fetchConversationList = async () => {
@@ -53,10 +52,18 @@ function ContactFeture() {
     dispatch(action);
   }
 
+  const handleSearchChange = newFilter => {
+    const filter = newFilter.searchTerm;
+    console.log('New filter: ', filter);
+
+    const action = searchConversation(filter)
+    dispatch(action);
+  } 
+
   return (
     <div className="contacts">
         <ContactHeader />
-        <ContactSearch />
+        <ContactSearch onSubmit={handleSearchChange}/>
         <ContactChats 
           conversations={conversationList.conversations} 
           onConversationClick={handleConversationClick}

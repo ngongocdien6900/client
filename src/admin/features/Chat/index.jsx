@@ -51,9 +51,6 @@ function ChatFeature() {
       setMessages(messages => [...messages, message]);
     });
 
-    socket.on('test', value => {
-      console.log(value);
-    })
 
     //disconnect 
     return () => socket.disconnect();
@@ -74,7 +71,7 @@ function ChatFeature() {
     socket.emit(TAG_SOCKET_IO.CHAT, data);
   
   }
-    
+
   return (
     <div className="chat">
       <ChatHeader />

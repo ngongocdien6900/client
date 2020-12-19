@@ -25,6 +25,7 @@ const userSlice = createSlice({
   initialState: {
     //thông tin của thằng user đang đăng nhập
     current: JSON.parse(localStorage.getItem(StorageKeys.USER)) || {},
+    loading: '',
   },
 
   //ở đây định nghĩa hàm, tự động tạo ra action type tương ứng

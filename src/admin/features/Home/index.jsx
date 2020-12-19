@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ChatFeature from '../Chat';
 import ContactFeture from '../Contact';
@@ -9,7 +10,8 @@ HomeAdminFeatures.propTypes = {
 };
 
 function HomeAdminFeatures(props) {
-
+    const idConversation = useSelector(state => state.contactAdmin.idConversation);
+    
     const history = useHistory();
 
     useEffect(() => {
@@ -25,7 +27,7 @@ function HomeAdminFeatures(props) {
       <div className="home">
       <div className="home__body">
         <ContactFeture />
-        <ChatFeature />
+        {idConversation && <ChatFeature />}
       </div>
     </div>
     );

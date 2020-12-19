@@ -20,32 +20,49 @@ const contactSlice = createSlice({
     },
 
     updateLastMessage: (state, action) => {
+      const { conversations } = state.conversationList;
       const newConversation = action.payload;
 
-      const conversationIndex = state.conversationList.conversations.findIndex(
-        (conversation) => conversation._id === newConversation._id
-      );
+      const conversationIndex = conversations.findIndex((conversation) => conversation._id === newConversation._id);
 
       if (conversationIndex >= 0) {
-        state.conversationList.conversations[conversationIndex] = newConversation;
+        conversations[conversationIndex] = newConversation;
       }
     },
 
     showConversation: (state, action) => {
+      const { conversations } = state.conversationList;
       const newConversation = action.payload;
 
-      const conversationIndex = state.conversationList.conversations.findIndex(
-        (conversation) => conversation._id === newConversation._id
-      );
-      
+      const conversationIndex = conversations.findIndex((conversation) => conversation._id === newConversation._id);
+
       if (conversationIndex < 0) {
-        console.log('Add', conversationIndex);
-        state.conversationList.conversations.push(newConversation);
-      } 
+        conversations.push(newConversation);
+      }
     },
+
+    searchConversation: (state, action) => {
+      const { conversations } = state.conversationList;
+      const search = action.payload;
+      const conversationFilter = conversations.filter((conversation) => {
+        console.log('Conversation List: ', conversation);
+        if (search === '') return conversation;
+        return conversation.nameConversation.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+      });
+
+      if(!conversationFilter.length) return;
+      state.conversationList.conversations = conversationFilter;
+    },
+
   },
 });
 
 const { actions, reducer } = contactSlice;
-export const { updateIdConversation, updateConversationList, updateLastMessage, showConversation } = actions;
+export const {
+  updateIdConversation,
+  updateConversationList,
+  updateLastMessage,
+  showConversation,
+  searchConversation,
+} = actions;
 export default reducer;
