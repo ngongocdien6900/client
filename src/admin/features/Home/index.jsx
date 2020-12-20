@@ -25,10 +25,10 @@ function HomeAdminFeatures(props) {
 
     return (
       <div className="home">
-      <div className="home__body">
-        <ContactFeture />
-        {idConversation && <ChatFeature />}
-      </div>
+        <div className="home__body">
+          <ContactFeture />
+          {idConversation && <ChatFeature />}
+        </div>
     </div>
     );
 }

@@ -14,6 +14,7 @@ function ContactFeture() {
 
   const dispatch = useDispatch();
   const conversationList = useSelector(state => state.contactAdmin.conversationList);
+  const conversationSearch = useSelector(state => state.contactAdmin.conversationSearch);
   useEffect(() => {
 
     const fetchConversationList = async () => {
@@ -54,7 +55,6 @@ function ContactFeture() {
 
   const handleSearchChange = newFilter => {
     const filter = newFilter.searchTerm;
-    console.log('New filter: ', filter);
 
     const action = searchConversation(filter)
     dispatch(action);
@@ -65,7 +65,7 @@ function ContactFeture() {
         <ContactHeader />
         <ContactSearch onSubmit={handleSearchChange}/>
         <ContactChats 
-          conversations={conversationList.conversations} 
+          conversations={conversationSearch.length !== 0 ? conversationSearch : conversationList.conversations} 
           onConversationClick={handleConversationClick}
         />
     </div>

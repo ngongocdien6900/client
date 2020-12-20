@@ -6,11 +6,13 @@ import { Avatar } from '@material-ui/core';
 ContactChats.propTypes = {
   conversations: PropTypes.array,
   onConversationClick: PropTypes.func,
+
 };
 
 ContactChats.defaultProps = {
   conversations: [],
   onConversationClick: null,
+
 };
 
 function ContactChats(props) {

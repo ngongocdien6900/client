@@ -1,4 +1,5 @@
 import messageApi from 'api/messageApi';
+import Loading from 'components/Loading';
 import TAG_SOCKET_IO from 'constants/socket-io';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';

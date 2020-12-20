@@ -7,6 +7,7 @@ const contactSlice = createSlice({
     nameConversation: '',
     conversationList: [],
     chat: '',
+    conversationSearch: [],
   },
 
   reducers: {
@@ -45,13 +46,12 @@ const contactSlice = createSlice({
       const { conversations } = state.conversationList;
       const search = action.payload;
       const conversationFilter = conversations.filter((conversation) => {
-        console.log('Conversation List: ', conversation);
         if (search === '') return conversation;
         return conversation.nameConversation.toLowerCase().indexOf(search.toLowerCase()) !== -1;
       });
 
       if(!conversationFilter.length) return;
-      state.conversationList.conversations = conversationFilter;
+      state.conversationSearch = conversationFilter;
     },
 
   },
