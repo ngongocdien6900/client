@@ -55,7 +55,6 @@ function ContactFeture() {
 
   const handleSearchChange = newFilter => {
     const filter = newFilter.searchTerm;
-
     const action = searchConversation(filter)
     dispatch(action);
   } 

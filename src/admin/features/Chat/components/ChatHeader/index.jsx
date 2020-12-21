@@ -1,12 +1,10 @@
 import { Avatar, IconButton } from "@material-ui/core";
-import { AttachFile, MoreVert, SearchOutlined } from "@material-ui/icons";
+import { MoreVert } from "@material-ui/icons";
+import CallIcon from '@material-ui/icons/Call';
+import VideocamIcon from '@material-ui/icons/Videocam';
 import React from 'react';
 import { useSelector } from "react-redux";
 import './style.scss';
-
-ChatHeader.propTypes = {
-
-};
 
 function ChatHeader(props) {
 
@@ -14,18 +12,18 @@ function ChatHeader(props) {
 
   return (
     <div className="chat__header">
-    <Avatar />
+    
 
-    <div className="chat__headerInfo">
+    <div className="chat__header--info">
       <h3>{nameConversation}</h3>
     </div>
 
-    <div className="chat__headerRight">
-      <IconButton>
-        <SearchOutlined />
+    <div className="chat__header--right">
+    <IconButton>
+        <CallIcon />
       </IconButton>
       <IconButton>
-        <AttachFile />
+        <VideocamIcon />
       </IconButton>
       <IconButton>
         <MoreVert />

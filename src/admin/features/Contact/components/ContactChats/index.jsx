@@ -1,7 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import './style.scss';
-import { Avatar } from '@material-ui/core';
 
 ContactChats.propTypes = {
   conversations: PropTypes.array,
@@ -33,7 +32,6 @@ function ContactChats(props) {
           className="contactChat" 
           key={conversation._id} 
           onClick={() => handleClick((conversation))}>
-          <Avatar />
           <div className="contactChat__info">
             <h2>{conversation.nameConversation}</h2>
             <p>{conversation.lastMessage}</p>
