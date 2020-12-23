@@ -3,7 +3,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useSnackbar } from 'notistack';
 import React, { useEffect } from 'react';
-import FacebookLogin from 'react-facebook-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';

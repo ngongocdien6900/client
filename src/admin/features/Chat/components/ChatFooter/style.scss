@@ -26,4 +26,11 @@
     margin: 10px;
     color: gray;
   }
+  & > .sticker{
+    bottom: 100px;
+    left: 37%;
+    max-width: 100%;
+    height: auto;
+    position: fixed;
+  }
 }

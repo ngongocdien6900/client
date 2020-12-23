@@ -21,7 +21,7 @@ const contactSlice = createSlice({
     },
 
     updateLastMessage: (state, action) => {
-      const { conversations } = state.conversationList;
+      const conversations  = state.conversationSearch.length !== 0 ? state.conversationSearch : state.conversationList.conversations;
       const newConversation = action.payload;
 
       const conversationIndex = conversations.findIndex((conversation) => conversation._id === newConversation._id);
@@ -32,7 +32,7 @@ const contactSlice = createSlice({
     },
 
     showConversation: (state, action) => {
-      const { conversations } = state.conversationList;
+      const conversations  = state.conversationSearch.length !== 0 ? state.conversationSearch : state.conversationList.conversations;
       const newConversation = action.payload;
 
       const conversationIndex = conversations.findIndex((conversation) => conversation._id === newConversation._id);
