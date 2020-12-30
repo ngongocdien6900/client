@@ -46,7 +46,6 @@ const adminSlice = createSlice({
   },
 
   //async action
-  //tự định nghĩa ra
   extraReducers: {
     [login.fulfilled]: (state, action) => {
       //action.payload là ở trên return ra

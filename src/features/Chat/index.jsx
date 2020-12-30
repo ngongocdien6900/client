@@ -13,6 +13,7 @@ let socket;
 const ENDPOINT = 'localhost:5000';
 
 function ChatFeature() {
+
   const currentUser = useSelector((state) => state.user.current);
   const [messages, setMessages] = useState([]);
 
@@ -46,7 +47,6 @@ function ChatFeature() {
 
     //disconnect ||cleanup the effect
     return () => socket.disconnect();
-
     //eslint-disable-next-line
   }, []);
 
@@ -80,8 +80,6 @@ function ChatFeature() {
       
       socket.emit(TAG_SOCKET_IO.CHAT, data);
     } 
-
-
   };
 
   return (

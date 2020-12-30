@@ -23,6 +23,7 @@ function ChatBody(props) {
 
   const { messageList, currentUser } = props;
   const messagesEndRef = useRef(null);
+
   useEffect(() => {
     scrollToBottom();
   },
@@ -32,6 +33,7 @@ function ChatBody(props) {
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }
+  
   return (
     <div className="chat__body">
       {messageList.map((message) => (

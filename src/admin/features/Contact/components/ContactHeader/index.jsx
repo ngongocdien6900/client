@@ -10,7 +10,6 @@ import './style.scss';
 
 function ContactHeader(props) {
 
-
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -18,7 +17,6 @@ function ContactHeader(props) {
     const action = logout();
     dispatch(action);
     history.push('/admin/auth/login');
-
   }
 
   return (

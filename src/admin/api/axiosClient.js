@@ -27,7 +27,7 @@ axiosClient.interceptors.response.use(
   },
   function (error) {
     const { data, config } = error.response;
-    const URLS = ['/login',  '/forgotpassword', '/resetpassword'];
+    const URLS = ['/login', '/forgotpassword', '/resetpassword'];
     if (URLS.indexOf(config.url)) {
       throw new Error(data.message);
     }

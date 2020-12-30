@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  createSlice
+} from '@reduxjs/toolkit';
 
 const contactSlice = createSlice({
   name: 'contact',
@@ -6,7 +8,6 @@ const contactSlice = createSlice({
     idConversation: '',
     nameConversation: '',
     conversationList: [],
-    chat: '',
     conversationSearch: [],
   },
 
@@ -21,18 +22,19 @@ const contactSlice = createSlice({
     },
 
     updateLastMessage: (state, action) => {
-      const conversations  = state.conversationSearch.length !== 0 ? state.conversationSearch : state.conversationList.conversations;
+      const conversations = state.conversationSearch.length !== 0 ? state.conversationSearch : state.conversationList.conversations;
       const newConversation = action.payload;
 
       const conversationIndex = conversations.findIndex((conversation) => conversation._id === newConversation._id);
 
       if (conversationIndex >= 0) {
         conversations[conversationIndex] = newConversation;
+        
       }
     },
 
     showConversation: (state, action) => {
-      const conversations  = state.conversationSearch.length !== 0 ? state.conversationSearch : state.conversationList.conversations;
+      const conversations = state.conversationSearch.length !== 0 ? state.conversationSearch : state.conversationList.conversations;
       const newConversation = action.payload;
 
       const conversationIndex = conversations.findIndex((conversation) => conversation._id === newConversation._id);
@@ -43,21 +45,26 @@ const contactSlice = createSlice({
     },
 
     searchConversation: (state, action) => {
-      const { conversations } = state.conversationList;
+      const {
+        conversations
+      } = state.conversationList;
       const search = action.payload;
       const conversationFilter = conversations.filter((conversation) => {
         if (search === '') return conversation;
         return conversation.nameConversation.toLowerCase().indexOf(search.toLowerCase()) !== -1;
       });
 
-      if(!conversationFilter.length) return;
+      if (!conversationFilter.length) return;
       state.conversationSearch = conversationFilter;
     },
 
   },
 });
 
-const { actions, reducer } = contactSlice;
+const {
+  actions,
+  reducer
+} = contactSlice;
 export const {
   updateIdConversation,
   updateConversationList,

@@ -1,4 +1,4 @@
-import { Avatar, IconButton } from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 import CallIcon from '@material-ui/icons/Call';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VideocamIcon from '@material-ui/icons/Videocam';

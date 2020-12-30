@@ -14,6 +14,7 @@ ChatFooter.defaultProps = {
 };
 
 function ChatFooter(props) {
+
   const [value, setValue] = useState('');
   const [block] = useState(false);
   const [openEmoji, setOpenEmoji] = useState('none');
@@ -50,7 +51,12 @@ function ChatFooter(props) {
       />
       <CollectionsIcon />
       <form onSubmit={handleFormSubmit}>
-        <input placeholder="Type a message" type="text" value={value} onChange={handleValueChange} />
+        <input 
+          placeholder="Type a message" 
+          type="text" 
+          value={value} 
+          onChange={handleValueChange} 
+        />
         <button type="submit">Send a message</button>
       </form>
     </div>

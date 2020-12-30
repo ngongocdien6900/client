@@ -18,8 +18,8 @@ function ContactSearch(props) {
   const typingTimeoutRef = useRef(null);
 
   const handleSearchTermChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(e.target.value);
+      const value = e.target.value;
+      setSearchTerm(e.target.value);
 
     if (!onSubmit) return;
 

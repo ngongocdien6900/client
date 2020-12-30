@@ -37,7 +37,6 @@ function ChatFeature() {
     //eslint-disable-next-line
   }, [idConversation]);
 
-
   useEffect(() => {
     //create new connect
     socket = io(ENDPOINT);
@@ -45,12 +44,10 @@ function ChatFeature() {
     //setup response
     socket.emit(TAG_SOCKET_IO.ADMIN_JOIN_CONVERSATION, idConversation);
     
-
     //update socket
     socket.on(TAG_SOCKET_IO.NEW_MESSAGE, (message) => {
       setMessages(messages => [...messages, message]);
     });
-
 
     //disconnect 
     return () => socket.disconnect();
@@ -58,8 +55,8 @@ function ChatFeature() {
   }, [idConversation]);
 
   const handleChatFormSubmit = async message => {
-    const sender = currentAdmin.fullname;
 
+    const sender = currentAdmin.fullname;
     // request save message
     const payload = {
       sender,

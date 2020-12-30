@@ -17,7 +17,7 @@ ContactChats.defaultProps = {
 function ContactChats(props) {
   
   const { conversations, onConversationClick } = props;
-  
+  console.log(conversations);
   const handleClick = conversation => {
 
     if(!onConversationClick) return;
